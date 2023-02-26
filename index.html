@@ -10,11 +10,10 @@
       function runScript() {
         var xhr = new XMLHttpRequest();
         xhr.open("GET", "script.py");
-        xhr.responseType = "blob";
         xhr.onload = function() {
           if (xhr.status === 200) {
             var img = document.createElement("img");
-            img.src = URL.createObjectURL(xhr.response);
+            img.src = xhr.responseText;
             document.getElementById("output").appendChild(img);
           }
         };
@@ -23,3 +22,6 @@
     </script>
   </body>
 </html>
+
+
+

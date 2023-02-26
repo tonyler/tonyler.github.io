@@ -1,5 +1,2 @@
-from PIL import Image
-
-img = Image.open("sticker.png")
-img.show()
+print("https://github.com/tonyler/tonyler.github.io/blob/main/sticker.png")
 
