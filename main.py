@@ -10,7 +10,7 @@ from Juno import JunoBalance, JunoPrice
 from Osmosis import OsmoBalance, OsmoPrice 
 
 
-app = Flask(__name__,static_folder='/home/tony/Desktop/Website Assets Tracker/images',template_folder='templates')
+app = Flask(__name__,template_folder='templates')
 
 @app.route('/')
 def index():
