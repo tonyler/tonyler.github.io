@@ -11646,10 +11646,10 @@ textarea.form-control {
 
 .portfolio-section .filters {
   border: 2px solid #dee2e6;
-  border-radius: 100px;
+  border-radius: 200px;
   padding: 2px;
   margin: 0 auto 20px;
-  max-width: 400px;
+  max-width: 500px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: -webkit-flex;
@@ -11668,7 +11668,7 @@ textarea.form-control {
   font-size: 13px;
   font-weight: 500;
   opacity: .7;
-  padding: 8px 14px;
+  padding: 10px 15px;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
 }
@@ -11734,7 +11734,7 @@ textarea.form-control {
 }
 
 .portfolio-section .portfolio-container .portfolio-item .content-holder .title {
-  font-size: 22px;
+  font-size: 30px;
   font-weight: 600;
 }
 
