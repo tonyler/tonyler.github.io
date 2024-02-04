@@ -20,6 +20,8 @@ body {
   background: #000;
   height: 100%;
   position: relative;
+  overflow: hidden;
+
 }
 
 a {
@@ -648,7 +650,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 .section-heading h2 {
   margin: 0 0 20px 0;
-  font-size: 40px;
+  font-size: 45px;
   font-weight: 400;
   position: relative;
   padding-bottom: 10px;
