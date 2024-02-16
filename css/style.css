@@ -23,6 +23,31 @@ body {
   overflow: auto;
 }
 
+}
+
+/* ===== Scrollbar CSS ===== */
+  /* Firefox */
+  * {
+    scrollbar-width: auto;
+    scrollbar-color: #fcfcfc #050505;
+  }
+
+  /* Chrome, Edge, and Safari */
+  *::-webkit-scrollbar {
+    width: 13px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: #050505;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: #fcfcfc;
+    border-radius: 10px;
+    border: 23px none #000000;
+  }
+
+
 a {
   color: orangered;
   -webkit-transition: 0.5s;
@@ -943,28 +968,5 @@ h1, h2, h3, h4, h5, h6 {
   animation-duration: .3s;
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both;
-}
-
-/* ===== Scrollbar CSS ===== */
-  /* Firefox */
-  * {
-    scrollbar-width: auto;
-    scrollbar-color: #fcfcfc #050505;
-  }
-
-  /* Chrome, Edge, and Safari */
-  *::-webkit-scrollbar {
-    width: 13px;
-  }
-
-  *::-webkit-scrollbar-track {
-    background: #050505;
-  }
-
-  *::-webkit-scrollbar-thumb {
-    background-color: #fcfcfc;
-    border-radius: 10px;
-    border: 23px none #000000;
-  }
 
 /*# sourceMappingURL=style.css.map */
