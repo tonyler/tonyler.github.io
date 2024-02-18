@@ -115,8 +115,12 @@ h2, h3 {
   }
 }
 
-#fh5co-services {
-  padding-bottom: 0;
+@media screen and (max-width: 768px) {
+  #fh5co-services .container .section-heading h3 {
+    width: 90%;
+    margin: 0 auto; 
+    font-size: 18px; 
+  }
 }
 
 .section-heading {
