@@ -30,14 +30,13 @@ body {
   margin: 0 auto; /* This centers the container */
 }
 
-/*  
-@media screen and (max-width: 1300px) {
+@media screen and (max-width: 768px) {
   .container {
-    width: 100%; 
-    padding: 0 10px; 
+    width: 100%; /* Make the container width 100% of the screen width */
+    padding: 0 10px; /* Optional: Add some padding on the sides */
   }
 }
-*/
+
 
 * {
   scrollbar-width: auto;
