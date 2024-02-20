@@ -47,6 +47,10 @@ img {
     padding: 0 10px; /* Optional: Add some padding on the sides */
     text-align: left;
   }
+  img{
+    max-width: auto;/* Ensures the image is responsive and fits within the container */
+    max-height: auto; /* Optional: limits the image height to the viewport height */
+  }
 }
 
 
@@ -130,7 +134,7 @@ h2, h3 {
 
 @media screen and (max-width: 768px) {
   #fh5co-services .container .section-heading h3 {
-    width: 100%;
+    width: 90%;
     font-size: 18px; 
     text-align: left;
   }
