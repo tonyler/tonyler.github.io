@@ -30,9 +30,20 @@ body {
   margin: 0 auto; /* This centers the container */
 }
 
+.image-container {
+  display: flex; /* Enables Flexbox layout */
+  justify-content: center; /* Centers the child horizontally */
+  align-items: center; /* Centers the child vertically */
+}
+
+img {
+  max-width: 100%; /* Ensures the image is responsive and fits within the container */
+  max-height: 100vh; /* Optional: limits the image height to the viewport height */
+}
+
 @media screen and (max-width: 768px) {
   .container {
-    width: 100%; /* Make the container width 100% of the screen width */
+    width: 90%; /* Make the container width 100% of the screen width */
     padding: 0 10px; /* Optional: Add some padding on the sides */
     text-align: left;
   }
