@@ -1,0 +1,198 @@
+/* Buttons that work in both light and dark themes */
+.profile .buttons a {
+    color: #000000;
+    background-color: #ffffff;
+    border: 2px solid #e06262;
+    transition: all 0.3s ease;
+    position: relative; /* Required for tooltips */
+}
+[data-theme="dark"] .profile .buttons a {
+    color: #ffffff;
+    background-color: transparent;
+}
+.profile .buttons a:hover {
+    box-shadow: 0 0 15px #e06262;
+    transform: translateY(-2px);
+}
+.profile img {
+    border: 3px solid #e06262;
+}
+
+/* CSS-only Tooltips */
+[data-tooltip] {
+    position: relative;
+    cursor: pointer;
+}
+
+[data-tooltip]:before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+    z-index: 1000;
+    margin-bottom: 8px;
+}
+
+[data-tooltip]:after {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: #333;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+    z-index: 1000;
+    margin-bottom: 2px;
+}
+
+[data-tooltip]:hover:before,
+[data-tooltip]:hover:after {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Dark theme tooltip colors */
+[data-theme="dark"] [data-tooltip]:before {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+[data-theme="dark"] [data-tooltip]:after {
+    border-top-color: #f0f0f0;
+}
+
+/* Move EVERYTHING to the very top */
+.main {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+}
+.profile {
+    margin: 0 !important;           /* No margins at all */
+    padding: 0rem 2rem !important; /* Minimal padding */
+}
+.profile img {
+    margin-bottom: 0rem !important;  /* Tiny spacing */
+}
+.profile h1 {
+    margin: 0.2rem 0 !important;       /* Minimal spacing */
+    font-size: 3rem !important;        /* Smaller title */
+}
+.profile p {
+    margin: 0.3rem 0 !important;       /* Minimal spacing */
+}
+.profile .buttons {
+    margin: 0.5rem 0 !important;       /* Minimal spacing */
+}
+/* Latest Posts Section - immediately under buttons */
+.latest-posts-section {
+    margin: 0.2rem 0 !important;  /* Almost touching buttons */
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.latest-posts-section h2 {
+    text-align: center;
+    margin: 0.3rem 0 !important;  /* Almost no spacing */
+    font-size: 1.4rem;            /* Smaller */
+}
+.post-entry {
+    margin-bottom: 0.4rem !important;  /* Super tight */
+    padding: 0.6rem !important;        /* Very compact */
+    border: 2px solid #e06262;         /* Full border like buttons */
+    border-radius: 8px;
+    transition: all 0.3s ease;         /* Smooth transition for all properties */
+    background-color: rgba(224, 98, 98, 0.05); /* Subtle background tint */
+}
+
+.post-entry:hover {
+    box-shadow: 0 0 15px #e06262;      /* Same glow as buttons */
+    transform: translateY(-2px);       /* Same lift effect as buttons */
+}
+.post-entry h3 {
+    margin: 0 0 0.1rem 0 !important;  /* Almost no spacing */
+    font-size: 1rem !important;       /* Compact */
+}
+.post-entry h3 a {
+    text-decoration: none;
+    color: inherit;
+}
+.post-entry h3 a:hover {
+    color: #e06262;
+}
+.entry-meta {
+    display: flex;
+    gap: 1rem;
+    margin: 0.1rem 0 !important;  /* Almost no spacing */
+    font-size: 0.8rem;            /* Smaller */
+    opacity: 0.8;
+}
+.post-category {
+    background: #e06262;
+    color: white;
+    padding: 0.1rem 0.4rem;  /* Very compact */
+    border-radius: 4px;
+    font-size: 0.7rem;       /* Tiny */
+    text-transform: uppercase;
+    font-weight: 600;
+}
+.entry-content p {
+    margin: 0 !important;
+    line-height: 1.2 !important;  /* Very tight */
+    font-size: 0.85rem !important; /* Smaller */
+}
+.no-posts {
+    text-align: center;
+    opacity: 0.7;
+    font-style: italic;
+}
+
+
+.page-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.page-header h1 {
+    margin-bottom: 0.5rem;
+}
+
+.posts-list {
+    max-width: 800px;
+    margin: 0 auto;
+}
+/* Header home button styling - matches theme toggle */
+#home-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    margin-right: 8px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#home-button:hover {
+    background-color: var(--theme-toggle-hover, rgba(224, 98, 98, 0.1));
+}
+
+#home-button svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--primary);
+}
