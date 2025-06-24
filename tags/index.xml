@@ -1,74 +1,79 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Tags on </title>
-    <link>https://your-domain.com/tags/</link>
-    <description>Recent content in Tags on </description>
+    <title>Tags on Tony&#39;s Web3 Hub</title>
+    <link>https://tonyler.github.io/tags/</link>
+    <description>Recent content in Tags on Tony&#39;s Web3 Hub</description>
+    <image>
+      <title>Tony&#39;s Web3 Hub</title>
+      <url>https://pbs.twimg.com/profile_images/1780235697346990080/cPXa9R5P_400x400.jpg</url>
+      <link>https://pbs.twimg.com/profile_images/1780235697346990080/cPXa9R5P_400x400.jpg</link>
+    </image>
     <generator>Hugo -- 0.147.6</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 06 Jun 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://your-domain.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://tonyler.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>AI</title>
-      <link>https://your-domain.com/tags/ai/</link>
+      <link>https://tonyler.github.io/tags/ai/</link>
       <pubDate>Fri, 06 Jun 2025 00:00:00 +0000</pubDate>
-      <guid>https://your-domain.com/tags/ai/</guid>
+      <guid>https://tonyler.github.io/tags/ai/</guid>
       <description></description>
     </item>
     <item>
       <title>Blockchain</title>
-      <link>https://your-domain.com/tags/blockchain/</link>
+      <link>https://tonyler.github.io/tags/blockchain/</link>
       <pubDate>Fri, 06 Jun 2025 00:00:00 +0000</pubDate>
-      <guid>https://your-domain.com/tags/blockchain/</guid>
+      <guid>https://tonyler.github.io/tags/blockchain/</guid>
       <description></description>
     </item>
     <item>
       <title>DeFi</title>
-      <link>https://your-domain.com/tags/defi/</link>
+      <link>https://tonyler.github.io/tags/defi/</link>
       <pubDate>Fri, 06 Jun 2025 00:00:00 +0000</pubDate>
-      <guid>https://your-domain.com/tags/defi/</guid>
+      <guid>https://tonyler.github.io/tags/defi/</guid>
       <description></description>
     </item>
     <item>
       <title>Leverage</title>
-      <link>https://your-domain.com/tags/leverage/</link>
+      <link>https://tonyler.github.io/tags/leverage/</link>
       <pubDate>Fri, 06 Jun 2025 00:00:00 +0000</pubDate>
-      <guid>https://your-domain.com/tags/leverage/</guid>
+      <guid>https://tonyler.github.io/tags/leverage/</guid>
       <description></description>
     </item>
     <item>
       <title>Research</title>
-      <link>https://your-domain.com/tags/research/</link>
+      <link>https://tonyler.github.io/tags/research/</link>
       <pubDate>Fri, 06 Jun 2025 00:00:00 +0000</pubDate>
-      <guid>https://your-domain.com/tags/research/</guid>
+      <guid>https://tonyler.github.io/tags/research/</guid>
       <description></description>
     </item>
     <item>
       <title>Risk Management</title>
-      <link>https://your-domain.com/tags/risk-management/</link>
+      <link>https://tonyler.github.io/tags/risk-management/</link>
       <pubDate>Fri, 06 Jun 2025 00:00:00 +0000</pubDate>
-      <guid>https://your-domain.com/tags/risk-management/</guid>
+      <guid>https://tonyler.github.io/tags/risk-management/</guid>
       <description></description>
     </item>
     <item>
       <title>Saga</title>
-      <link>https://your-domain.com/tags/saga/</link>
+      <link>https://tonyler.github.io/tags/saga/</link>
       <pubDate>Fri, 06 Jun 2025 00:00:00 +0000</pubDate>
-      <guid>https://your-domain.com/tags/saga/</guid>
+      <guid>https://tonyler.github.io/tags/saga/</guid>
       <description></description>
     </item>
     <item>
       <title>Trading</title>
-      <link>https://your-domain.com/tags/trading/</link>
+      <link>https://tonyler.github.io/tags/trading/</link>
       <pubDate>Fri, 06 Jun 2025 00:00:00 +0000</pubDate>
-      <guid>https://your-domain.com/tags/trading/</guid>
+      <guid>https://tonyler.github.io/tags/trading/</guid>
       <description></description>
     </item>
     <item>
       <title>Web3</title>
-      <link>https://your-domain.com/tags/web3/</link>
+      <link>https://tonyler.github.io/tags/web3/</link>
       <pubDate>Fri, 06 Jun 2025 00:00:00 +0000</pubDate>
-      <guid>https://your-domain.com/tags/web3/</guid>
+      <guid>https://tonyler.github.io/tags/web3/</guid>
       <description></description>
     </item>
   </channel>
