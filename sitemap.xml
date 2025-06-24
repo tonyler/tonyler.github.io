@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://tonyler.github.io/</loc>
+    <lastmod>2025-06-06T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
     <loc>https://tonyler.github.io/tags/ai/</loc>
     <lastmod>2025-06-06T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -22,17 +27,17 @@
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://tonyler.github.io/explainers/</loc>
-    <lastmod>2025-06-06T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
     <loc>https://tonyler.github.io/categories/finance/</loc>
     <lastmod>2025-06-06T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
     <loc>https://tonyler.github.io/tags/leverage/</loc>
+    <lastmod>2025-06-06T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://tonyler.github.io/thoughts/</loc>
     <lastmod>2025-06-06T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -67,17 +72,12 @@
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://tonyler.github.io/explainers/the-ai-&#43;-web3-revolution/</loc>
+    <loc>https://tonyler.github.io/thoughts/the-ai-&#43;-web3-revolution/</loc>
     <lastmod>2025-06-06T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://tonyler.github.io/explainers/the-shocking-truth-about-leverage-trading-academic-research-reveals-the-hidden-carnage/</loc>
-    <lastmod>2025-06-06T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>https://tonyler.github.io/</loc>
+    <loc>https://tonyler.github.io/thoughts/the-shocking-truth-about-leverage-trading-academic-research-reveals-the-hidden-carnage/</loc>
     <lastmod>2025-06-06T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
