@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tøny — Web3 Community Builder</title>
+    <link rel="icon" type="image/jpeg" href="tony.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ── Tokens ─────────────────────────────────────────────── */
+        :root {
+            --bg:      #0c0c0c;
+            --bg2:     #111111;
+            --fg:      #f0ebe0;
+            --fg2:     #7a776f;
+            --red:     #ff4433;
+            --border:  rgba(240,235,224,0.08);
+            --borderS: rgba(240,235,224,0.18);
+            --display: 'Clash Display', sans-serif;
+            --body:    'Satoshi', sans-serif;
+        }
+
+        /* ── Reset ───────────────────────────────────────────────── */
+        *, *::before, *::after {
+            margin: 0; padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        ::selection { background: var(--red); color: var(--bg); }
+
+        /* ── Base ────────────────────────────────────────────────── */
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+            /* desktop: snap between sections */
+            scroll-snap-type: y mandatory;
+        }
+
+        body {
+            font-family: var(--body);
+            background: var(--bg);
+            color: var(--fg);
+            line-height: 1.6;
+            cursor: none;
+            overflow-x: hidden;
+        }
+
+        /* grain */
+        body::before {
+            content: '';
+            position: fixed; inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            opacity: 0.018;
+            pointer-events: none;
+            z-index: 9000;
+        }
+
+        /* ── Custom cursor ───────────────────────────────────────── */
+        .cursor {
+            position: fixed;
+            width: 10px; height: 10px;
+            background: var(--red);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width .2s, height .2s, background .2s, opacity .2s;
+            mix-blend-mode: screen;
+        }
+        .cursor.big {
+            width: 48px; height: 48px;
+            background: rgba(255,68,51,.2);
+            border: 1px solid var(--red);
+            mix-blend-mode: normal;
+        }
+
+        /* ── Sections ────────────────────────────────────────────── */
+        section {
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .inner {
+            width: 100%;
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 56px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ── Top nav ─────────────────────────────────────────────── */
+        .top-nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 68px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 56px;
+            z-index: 800;
+        }
+
+        .logo {
+            font-family: var(--display);
+            font-size: .95rem;
+            font-weight: 600;
+            letter-spacing: .04em;
+            color: var(--fg);
+            text-decoration: none;
+            padding-left: 16px;
+            position: relative;
+        }
+        .logo::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 50%;
+            transform: translateY(-50%);
+            width: 7px; height: 7px;
+            background: var(--red);
+            border-radius: 50%;
+        }
+
+        .nav-list {
+            display: flex;
+            gap: 44px;
+            list-style: none;
+        }
+        .nav-list a {
+            font-family: var(--body);
+            font-size: .8rem;
+            font-weight: 500;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--fg2);
+            text-decoration: none;
+            transition: color .15s;
+            position: relative;
+            padding-bottom: 3px;
+        }
+        .nav-list a::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 100%; height: 1.5px;
+            background: var(--red);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform .2s;
+        }
+        .nav-list a:hover, .nav-list a.active { color: var(--fg); }
+        .nav-list a:hover::after, .nav-list a.active::after { transform: scaleX(1); }
+
+        /* ── Progress bar ────────────────────────────────────────── */
+        .prog {
+            position: fixed;
+            top: 0; left: 0;
+            height: 2px;
+            background: var(--red);
+            z-index: 900;
+            width: 25%;
+            transition: width .25s;
+        }
+
+        /* ── Pagination dots ─────────────────────────────────────── */
+        .pag {
+            position: fixed;
+            right: 28px; top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 700;
+        }
+        .pag-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            border: 1.5px solid var(--borderS);
+            background: transparent;
+            cursor: none;
+            transition: all .2s;
+            padding: 0;
+        }
+        .pag-dot:hover { border-color: var(--red); transform: scale(1.2); }
+        .pag-dot.active { background: var(--red); border-color: var(--red); transform: scale(1.25); }
+
+        /* ── Footer strip ────────────────────────────────────────── */
+        .foot {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 56px;
+            z-index: 700;
+        }
+        .foot span {
+            font-size: .62rem;
+            letter-spacing: .08em;
+            color: var(--fg2);
+        }
+        .foot-status {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            font-size: .62rem;
+            letter-spacing: .08em;
+            color: var(--fg2);
+        }
+        .foot-dot {
+            width: 6px; height: 6px;
+            background: var(--red);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%,100% { opacity:1; transform:scale(1); }
+            50% { opacity:.4; transform:scale(.75); }
+        }
+
+        /* ── Section eyebrow ─────────────────────────────────────── */
+        .eyebrow {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+        .eyebrow-num {
+            font-family: var(--display);
+            font-size: 2.8rem;
+            font-weight: 600;
+            color: transparent;
+            -webkit-text-stroke: 1px var(--borderS);
+            line-height: 1;
+        }
+        .eyebrow-label {
+            font-family: var(--body);
+            font-size: .7rem;
+            font-weight: 500;
+            letter-spacing: .28em;
+            text-transform: uppercase;
+            color: var(--red);
+        }
+
+        /* ── ① Hero ──────────────────────────────────────────────── */
+        #hero { background: var(--bg); }
+
+        .hero-wrap {
+            display: flex;
+            align-items: flex-end;
+            height: 100%;
+            padding-top: 68px;
+            padding-bottom: 36px;
+        }
+
+        .hero-text { max-width: 620px; }
+
+        .hero-tag {
+            font-family: var(--body);
+            font-size: .7rem;
+            font-weight: 500;
+            letter-spacing: .28em;
+            text-transform: uppercase;
+            color: var(--red);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 32px;
+        }
+        .hero-tag::before {
+            content: '';
+            width: 36px; height: 1px;
+            background: var(--red);
+            flex-shrink: 0;
+        }
+
+        .hero-h1 {
+            font-family: var(--display);
+            font-size: clamp(4.5rem, 9vw, 7.5rem);
+            font-weight: 600;
+            line-height: .9;
+            letter-spacing: -.045em;
+            margin-bottom: 36px;
+        }
+        .hero-h1 .accent { color: var(--red); }
+
+        .hero-sub {
+            font-size: 1.05rem;
+            color: var(--fg2);
+            line-height: 1.75;
+            max-width: 400px;
+            margin-bottom: 48px;
+        }
+
+        .btn-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-family: var(--display);
+            font-size: .85rem;
+            font-weight: 500;
+            background: var(--red);
+            color: var(--bg);
+            text-decoration: none;
+            border-radius: 100px;
+            padding: 16px 32px;
+            cursor: none;
+            transition: transform .2s, box-shadow .2s, gap .2s;
+        }
+        .btn-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 16px 40px rgba(255,68,51,.3);
+            gap: 20px;
+        }
+        .btn-cta:active { transform: scale(.97); }
+
+        /* Character */
+        .hero-char {
+            position: absolute;
+            right: 5%;
+            bottom: 0;
+            height: 88vh;
+            display: flex;
+            align-items: flex-end;
+            pointer-events: none;
+        }
+        .hero-char img {
+            height: 100%;
+            width: auto;
+            opacity: .88;
+        }
+
+        /* ── ② About ─────────────────────────────────────────────── */
+        #about { background: var(--bg); }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1.25fr .75fr;
+            gap: 80px;
+            align-items: start;
+        }
+
+        .about-body {
+            font-size: 1.05rem;
+            color: var(--fg2);
+            line-height: 1.85;
+        }
+        .about-body p + p { margin-top: 22px; }
+        .about-body strong { color: var(--fg); font-weight: 500; }
+
+        .about-sidebar {
+            border-left: 1px solid var(--border);
+            padding-left: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .detail-group h4 {
+            font-family: var(--display);
+            font-size: .65rem;
+            font-weight: 600;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--fg2);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .detail-group h4::before {
+            content: '';
+            width: 7px; height: 7px;
+            background: var(--red);
+            border-radius: 2px;
+            flex-shrink: 0;
+            transition: transform .2s;
+        }
+        .detail-group:hover h4::before { transform: rotate(45deg); }
+
+        .detail-group ul { list-style: none; }
+        .detail-group li {
+            font-size: .92rem;
+            color: var(--fg);
+            padding: 9px 0 9px 20px;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            transition: color .15s, padding-left .15s;
+        }
+        .detail-group li:first-child { border-top: 1px solid var(--border); }
+        .detail-group li::before {
+            content: '→';
+            position: absolute; left: 0;
+            color: var(--borderS);
+            transition: color .15s;
+        }
+        .detail-group li:hover { color: var(--red); padding-left: 28px; }
+        .detail-group li:hover::before { color: var(--red); }
+
+        /* ── ③ Work ──────────────────────────────────────────────── */
+        #work { background: var(--bg2); }
+
+        .proj-list { border-top: 1px solid var(--border); }
+
+        .proj-row {
+            display: grid;
+            grid-template-columns: 72px 1fr auto auto;
+            align-items: center;
+            gap: 28px;
+            padding: 26px 0;
+            border-bottom: 1px solid var(--border);
+            text-decoration: none;
+            color: inherit;
+            position: relative;
+            transition: padding-left .25s;
+        }
+        .proj-row::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: rgba(255,68,51,.04);
+            opacity: 0;
+            transition: opacity .2s;
+        }
+        .proj-row:hover::before { opacity: 1; }
+        .proj-row:hover { padding-left: 16px; }
+
+        .proj-year {
+            font-family: var(--display);
+            font-size: .78rem;
+            color: var(--fg2);
+            font-weight: 500;
+            position: relative; z-index: 1;
+        }
+        .proj-name {
+            font-family: var(--display);
+            font-size: clamp(1.5rem, 2.8vw, 2.1rem);
+            font-weight: 600;
+            transition: color .2s;
+            position: relative; z-index: 1;
+        }
+        .proj-row:hover .proj-name { color: var(--red); }
+
+        .proj-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            position: relative; z-index: 1;
+        }
+        .tag {
+            font-size: .66rem;
+            font-weight: 500;
+            color: var(--fg2);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            padding: 4px 12px;
+            letter-spacing: .04em;
+            transition: border-color .2s, color .2s;
+        }
+        .proj-row:hover .tag { border-color: var(--red); color: var(--fg); }
+
+        .proj-arrow {
+            width: 40px; height: 40px;
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1rem;
+            transition: all .2s;
+            flex-shrink: 0;
+            position: relative; z-index: 1;
+        }
+        .proj-row:hover .proj-arrow {
+            background: var(--red);
+            border-color: var(--red);
+            transform: rotate(-45deg);
+        }
+
+        /* ── ④ Contact ───────────────────────────────────────────── */
+        #contact { background: var(--bg); }
+
+        .contact-title {
+            font-family: var(--display);
+            font-size: clamp(3rem, 7vw, 5.5rem);
+            font-weight: 600;
+            letter-spacing: -.045em;
+            line-height: .95;
+            margin-bottom: 52px;
+        }
+        .contact-title .accent { color: var(--red); }
+
+        .contact-links {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .c-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-family: var(--body);
+            font-size: .85rem;
+            font-weight: 500;
+            color: var(--fg2);
+            text-decoration: none;
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            padding: 13px 26px;
+            cursor: none;
+            transition: color .2s, border-color .2s, background .2s, transform .2s;
+        }
+        .c-link .dot {
+            width: 6px; height: 6px;
+            background: var(--red);
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .c-link:hover {
+            color: var(--fg);
+            border-color: var(--red);
+            background: rgba(255,68,51,.08);
+            transform: translateY(-2px);
+        }
+        .c-link:active { transform: scale(.97); }
+
+        .social-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        /* ── Mobile bottom nav (div NOT nav, avoids CSS collision) ── */
+        .mob-nav {
+            display: none;
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            top: auto; /* never stretch */
+            background: rgba(12,12,12,.96);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-top: 1px solid var(--border);
+            z-index: 800;
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+        .mob-nav-row {
+            display: flex;
+            justify-content: space-around;
+        }
+        .mob-btn {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            background: none;
+            border: none;
+            color: var(--fg2);
+            font-family: var(--body);
+            font-size: .55rem;
+            font-weight: 500;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            text-decoration: none;
+            min-height: 58px;
+            padding: 10px 0 12px;
+            user-select: none;
+            transition: color .15s;
+            position: relative;
+            cursor: pointer;
+        }
+        .mob-btn svg {
+            width: 22px; height: 22px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: transform .15s;
+        }
+        .mob-btn.active { color: var(--red); }
+        .mob-btn.active::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 20%; right: 20%;
+            height: 2px;
+            background: var(--red);
+            border-radius: 0 0 2px 2px;
+        }
+        .mob-btn:active svg { transform: scale(.85); }
+
+        /* ── MOBILE ──────────────────────────────────────────────── */
+        @media (max-width: 768px) {
+            /* reset snap — normal scroll on mobile */
+            html { scroll-snap-type: none; }
+            body { cursor: auto; }
+
+            /* hide desktop chrome */
+            .cursor, .top-nav, .pag, .foot, .prog { display: none; }
+
+            /* show mobile nav */
+            .mob-nav { display: block; }
+
+            /* sections: min-height, allow overflow */
+            section {
+                height: auto;
+                min-height: 100dvh;
+                overflow: visible;
+                scroll-snap-align: none;
+                justify-content: flex-start;
+            }
+
+            .inner {
+                padding: 0 22px;
+            }
+
+            /* ─ Hero ─ */
+            #hero {
+                overflow: hidden; /* clip the char */
+                min-height: 100dvh;
+                height: 100dvh;
+            }
+
+            .hero-wrap {
+                padding-top: 56px;
+                padding-bottom: calc(66px + env(safe-area-inset-bottom));
+                height: 100%;
+                align-items: center;
+            }
+
+            .hero-text {
+                max-width: 60%;
+                position: relative;
+                z-index: 2;
+            }
+
+            .hero-tag { margin-bottom: 20px; font-size: .62rem; }
+
+            .hero-h1 {
+                font-size: clamp(2.8rem, 11vw, 4rem);
+                margin-bottom: 28px;
+            }
+
+            .hero-sub { display: none; }
+
+            .btn-cta {
+                padding: 13px 22px;
+                font-size: .8rem;
+                gap: 10px;
+                cursor: auto;
+            }
+
+            /* char: absolute right side, always visible */
+            .hero-char {
+                position: absolute;
+                right: -8px;
+                bottom: 0;
+                height: 84%;
+                top: auto;
+                left: auto;
+                width: auto;
+            }
+
+            /* ─ About ─ */
+            #about {
+                padding-top: 56px;
+                padding-bottom: calc(72px + env(safe-area-inset-bottom));
+            }
+            #about .inner { padding-top: 16px; }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 36px;
+            }
+
+            .about-sidebar {
+                border-left: none;
+                padding-left: 0;
+                border-top: 1px solid var(--border);
+                padding-top: 28px;
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 28px;
+            }
+            .detail-group { flex: 1; min-width: 130px; }
+
+            /* ─ Work ─ */
+            #work {
+                padding-top: 56px;
+                padding-bottom: calc(72px + env(safe-area-inset-bottom));
+            }
+            #work .inner { padding-top: 16px; }
+
+            .proj-row {
+                grid-template-columns: 1fr auto;
+                gap: 14px;
+                padding: 18px 0;
+            }
+            .proj-year, .proj-tags { display: none; }
+            .proj-name { font-size: 1.15rem; }
+
+            /* ─ Contact ─ */
+            #contact {
+                padding-top: 56px;
+                padding-bottom: calc(72px + env(safe-area-inset-bottom));
+            }
+            #contact .inner { padding-top: 16px; }
+
+            .contact-title {
+                font-size: clamp(2.4rem, 10vw, 3.2rem);
+                margin-bottom: 32px;
+            }
+
+            .contact-links { align-items: stretch; }
+            .c-link {
+                justify-content: center;
+                min-height: 50px;
+                cursor: auto;
+            }
+            .social-row { flex-direction: column; gap: 10px; }
+
+            /* eyebrow */
+            .eyebrow-num { font-size: 2rem; }
+        }
+
+        @media (max-width: 480px) {
+            .hero-text { max-width: 62%; }
+            .hero-char { height: 76%; }
+            .hero-h1 { font-size: clamp(2.4rem, 12vw, 3.2rem); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cursor"></div>
+    <div class="prog"></div>
+
+    <!-- ── Desktop top nav ─────────────────────────────────────── -->
+    <nav class="top-nav">
+        <a href="#hero" class="logo">tøny</a>
+        <ul class="nav-list">
+            <li><a href="#about">About</a></li>
+            <li><a href="#work">Work</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- ── Desktop pagination ──────────────────────────────────── -->
+    <div class="pag">
+        <button class="pag-dot active" data-id="hero"></button>
+        <button class="pag-dot" data-id="about"></button>
+        <button class="pag-dot" data-id="work"></button>
+        <button class="pag-dot" data-id="contact"></button>
+    </div>
+
+    <!-- ── Desktop footer ──────────────────────────────────────── -->
+    <div class="foot">
+        <span>© 2025 tøny</span>
+        <div class="foot-status">
+            <span class="foot-dot"></span>
+            Available for work
+        </div>
+        <span id="foot-time"></span>
+    </div>
+
+    <!-- ── Sections ────────────────────────────────────────────── -->
+
+    <section id="hero">
+        <div class="inner">
+            <div class="hero-wrap">
+                <div class="hero-text">
+                    <h1 class="hero-h1">
+                        Hey, I'm<br>
+                        <span class="accent">Tony</span>
+                    </h1>
+                    <p class="hero-sub">Community architect &amp; educator. I build bots, grow communities, and create content that makes Web3 accessible to everyone.</p>
+                    <a href="#work" class="btn-cta">See My Work <span>→</span></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="inner">
+            <div class="eyebrow">
+                <span class="eyebrow-num">01</span>
+                <span class="eyebrow-label">About</span>
+            </div>
+            <h2 style="font-family:var(--display);font-size:clamp(2rem,4vw,3rem);font-weight:600;letter-spacing:-.03em;line-height:1.1;margin-bottom:44px;">
+                Builder who educates.<br>Educator who builds.
+            </h2>
+            <div class="about-grid">
+                <div class="about-body">
+                    <p><strong>I'm Tony</strong>, a Web3 builder focused on community growth, education, and storytelling. I help projects connect with their audiences and make complex ideas easy to understand through hands-on community work, content, and automation tools.</p>
+                    <p>Based in Greece, I love to learn, adapt, and keep up with the ever-changing Web3 world. Outside of work, I spend my time training BJJ, doing calisthenics, traveling, gaming, and collecting cool nerdy stuff.</p>
+                </div>
+                <div class="about-sidebar">
+                    <div class="detail-group">
+                        <h4>What I Do</h4>
+                        <ul>
+                            <li>Community Building</li>
+                            <li>Educational Content</li>
+                            <li>Discord &amp; Telegram Bots</li>
+                            <li>Growth Strategy</li>
+                        </ul>
+                    </div>
+                    <div class="detail-group">
+                        <h4>Tools &amp; Platforms</h4>
+                        <ul>
+                            <li>Discord / Telegram</li>
+                            <li>X / Reddit</li>
+                            <li>Custom Tooling</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="work">
+        <div class="inner">
+            <div class="eyebrow">
+                <span class="eyebrow-num">02</span>
+                <span class="eyebrow-label">Work</span>
+            </div>
+            <h2 style="font-family:var(--display);font-size:clamp(2rem,4vw,3rem);font-weight:600;letter-spacing:-.03em;line-height:1.1;margin-bottom:36px;">
+                Featured Work
+            </h2>
+            <div class="proj-list">
+                <a href="https://www.sphx.io/" target="_blank" rel="noopener" class="proj-row">
+                    <span class="proj-year">2025</span>
+                    <h3 class="proj-name">Sphinx Protocol</h3>
+                    <div class="proj-tags">
+                        <span class="tag">Community Manager</span>
+                        <span class="tag">Content Creation</span>
+                        <span class="tag">Events</span>
+                    </div>
+                    <div class="proj-arrow">↗</div>
+                </a>
+                <a href="https://www.blockbuzz.co/" target="_blank" rel="noopener" class="proj-row">
+                    <span class="proj-year">2025</span>
+                    <h3 class="proj-name">Blockbuzz</h3>
+                    <div class="proj-tags">
+                        <span class="tag">Active</span>
+                        <span class="tag">Web3</span>
+                    </div>
+                    <div class="proj-arrow">↗</div>
+                </a>
+                <a href="https://nolus.io/" target="_blank" rel="noopener" class="proj-row">
+                    <span class="proj-year">2024</span>
+                    <h3 class="proj-name">Nolus Protocol</h3>
+                    <div class="proj-tags">
+                        <span class="tag">Active</span>
+                        <span class="tag">Community Lead</span>
+                    </div>
+                    <div class="proj-arrow">↗</div>
+                </a>
+                <a href="https://thecybernetics.org/" target="_blank" rel="noopener" class="proj-row">
+                    <span class="proj-year">2023</span>
+                    <h3 class="proj-name">The Cybernetics Group</h3>
+                    <div class="proj-tags">
+                        <span class="tag">Active</span>
+                        <span class="tag">Community Lead</span>
+                    </div>
+                    <div class="proj-arrow">↗</div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="inner">
+            <div class="eyebrow">
+                <span class="eyebrow-num">03</span>
+                <span class="eyebrow-label">Contact</span>
+            </div>
+            <h2 class="contact-title">
+                Let's <span class="accent">create</span><br>together.
+            </h2>
+            <div class="contact-links">
+                <a href="mailto:tony@thecybernetics.org" class="c-link">
+                    <span class="dot"></span>
+                    tony@thecybernetics.org
+                </a>
+            </div>
+            <div class="social-row">
+                <a href="https://github.com/tonyler" target="_blank" rel="noopener" class="c-link">GitHub</a>
+                <a href="https://x.com/tonyler_" target="_blank" rel="noopener" class="c-link">Twitter / X</a>
+                <a href="https://t.me/tonyler" target="_blank" rel="noopener" class="c-link">Telegram</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── Mobile bottom nav (div, NOT nav — avoids top-nav CSS) ── -->
+    <div class="mob-nav">
+        <div class="mob-nav-row">
+            <a href="#hero" class="mob-btn active" data-id="hero">
+                <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                Home
+            </a>
+            <a href="#about" class="mob-btn" data-id="about">
+                <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                About
+            </a>
+            <a href="#work" class="mob-btn" data-id="work">
+                <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                Work
+            </a>
+            <a href="#contact" class="mob-btn" data-id="contact">
+                <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                Contact
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // ── Cursor ──────────────────────────────────────────────
+        const cursor = document.querySelector('.cursor');
+        if (cursor && window.matchMedia('(pointer:fine)').matches) {
+            document.addEventListener('mousemove', e => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top  = e.clientY + 'px';
+            });
+            document.querySelectorAll('a, button').forEach(el => {
+                el.addEventListener('mouseenter', () => cursor.classList.add('big'));
+                el.addEventListener('mouseleave', () => cursor.classList.remove('big'));
+            });
+        }
+
+        // ── IntersectionObserver: active states + progress ───────
+        const ids    = ['hero','about','work','contact'];
+        const prog   = document.querySelector('.prog');
+        const pagDots = document.querySelectorAll('.pag-dot');
+        const mobBtns = document.querySelectorAll('.mob-btn');
+        const navAs  = document.querySelectorAll('.nav-list a');
+
+        const setActive = (id) => {
+            const idx = ids.indexOf(id);
+            if (idx === -1) return;
+
+            pagDots.forEach((d,i) => d.classList.toggle('active', i === idx));
+            mobBtns.forEach(b => b.classList.toggle('active', b.dataset.id === id));
+            navAs.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + id));
+            if (prog) prog.style.width = ((idx + 1) / ids.length * 100) + '%';
+        };
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(e => { if (e.isIntersecting) setActive(e.target.id); });
+        }, { threshold: .45 });
+
+        ids.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) observer.observe(el);
+        });
+
+        // ── Pagination dot clicks ────────────────────────────────
+        pagDots.forEach((dot, i) => {
+            dot.addEventListener('click', () => {
+                document.getElementById(ids[i])?.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // ── Footer clock ─────────────────────────────────────────
+        const timeEl = document.getElementById('foot-time');
+        if (timeEl) {
+            const tick = () => timeEl.textContent = new Date().toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',hour12:true});
+            tick();
+            setInterval(tick, 1000);
+        }
+    </script>
+</body>
+</html>
