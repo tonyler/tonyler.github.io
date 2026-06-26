@@ -34,6 +34,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         html, body {
@@ -962,6 +963,141 @@
                 font-size: 1rem;
             }
         }
+
+        /* ── Mobile bottom navigation ───────────────────────────── */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(13, 13, 13, 0.96);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-top: 1px solid var(--color-border);
+            z-index: 200;
+            /* respect iPhone home indicator */
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+
+        .mobile-nav-inner {
+            display: flex;
+            justify-content: space-around;
+            align-items: stretch;
+        }
+
+        .mobile-nav-btn {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            background: none;
+            border: none;
+            color: var(--color-cream-muted);
+            font-family: var(--font-body);
+            font-size: 0.58rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 10px 0 12px;
+            min-height: 56px;
+            cursor: pointer;
+            user-select: none;
+            transition: color 0.15s;
+            position: relative;
+        }
+
+        .mobile-nav-btn svg {
+            width: 22px;
+            height: 22px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: transform 0.15s;
+        }
+
+        .mobile-nav-btn.active {
+            color: var(--color-accent);
+        }
+
+        .mobile-nav-btn.active::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 20%;
+            right: 20%;
+            height: 2px;
+            background: var(--color-accent);
+            border-radius: 0 0 2px 2px;
+        }
+
+        .mobile-nav-btn:active svg {
+            transform: scale(0.85);
+        }
+
+        /* ── Active/pressed states for touch feedback ───────────── */
+        .hero-cta:active {
+            transform: scale(0.96) translateY(0) !important;
+            box-shadow: none !important;
+        }
+
+        .project-item:active {
+            background: rgba(255, 77, 61, 0.06);
+        }
+
+        .contact-email:active {
+            transform: scale(0.98);
+            background: rgba(255, 77, 61, 0.12);
+        }
+
+        .social-link:active {
+            transform: scale(0.94);
+            background: var(--color-accent);
+            color: var(--color-cream);
+        }
+
+        /* ── Mobile-specific overrides ──────────────────────────── */
+        @media (max-width: 768px) {
+            .mobile-nav {
+                display: block;
+            }
+
+            /* hide top nav links — bottom nav replaces them */
+            .nav-links {
+                display: none;
+            }
+
+            /* sections need bottom clearance for the nav bar */
+            .section {
+                padding-bottom: calc(72px + env(safe-area-inset-bottom));
+                /* momentum scroll on iOS */
+                -webkit-overflow-scrolling: touch;
+            }
+
+            /* bigger touch targets for project rows */
+            .project-item {
+                padding: 18px 0;
+                min-height: 64px;
+            }
+
+            /* social links: full-width tappable rows on small screens */
+            .social-link {
+                padding: 14px 24px;
+                min-height: 48px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            /* email link: taller touch target */
+            .contact-email {
+                min-height: 56px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1145,6 +1281,28 @@
         </section>
     </div>
 
+    <!-- Mobile bottom navigation -->
+    <nav class="mobile-nav" aria-label="Mobile navigation">
+        <div class="mobile-nav-inner">
+            <button class="mobile-nav-btn active" data-section="0" aria-label="Home">
+                <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                Home
+            </button>
+            <button class="mobile-nav-btn" data-section="1" aria-label="About">
+                <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                About
+            </button>
+            <button class="mobile-nav-btn" data-section="2" aria-label="Work">
+                <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                Work
+            </button>
+            <button class="mobile-nav-btn" data-section="3" aria-label="Contact">
+                <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                Contact
+            </button>
+        </div>
+    </nav>
+
     <!-- Footer -->
     <footer>
     </footer>
@@ -1152,8 +1310,8 @@
     <script>
         // Section Navigation
         const sections = document.querySelectorAll('.section');
-        const navButtons = document.querySelectorAll('[data-section]');
         const paginationDots = document.querySelectorAll('.pagination-dot');
+        const mobileNavBtns = document.querySelectorAll('.mobile-nav-btn');
         const progressBar = document.querySelector('.progress-bar');
         let currentSection = 0;
         let isTransitioning = false;
@@ -1166,21 +1324,28 @@
             // Exit animation
             sections[currentSection].classList.add('exiting');
             sections[currentSection].classList.remove('active');
-            paginationDots[currentSection].classList.remove('active');
+            paginationDots[currentSection]?.classList.remove('active');
 
             currentSection = index;
 
             // Enter animation
             setTimeout(() => {
                 document.querySelectorAll('.section.exiting').forEach(s => s.classList.remove('exiting'));
+                // reset scroll position when entering a section
+                sections[currentSection].scrollTop = 0;
                 sections[currentSection].classList.add('active');
-                paginationDots[currentSection].classList.add('active');
+                paginationDots[currentSection]?.classList.add('active');
 
                 // Update progress bar
                 progressBar.style.width = ((currentSection + 1) / sections.length * 100) + '%';
 
-                // Update nav
+                // Update top nav active state
                 document.querySelectorAll('.nav-links button').forEach(btn => {
+                    btn.classList.toggle('active', parseInt(btn.dataset.section) === currentSection);
+                });
+
+                // Update mobile bottom nav active state
+                mobileNavBtns.forEach(btn => {
                     btn.classList.toggle('active', parseInt(btn.dataset.section) === currentSection);
                 });
 
@@ -1188,8 +1353,8 @@
             }, 150);
         }
 
-        // Click handlers
-        navButtons.forEach(btn => {
+        // Wire ALL [data-section] buttons (top nav + hero CTA + mobile nav)
+        document.querySelectorAll('[data-section]').forEach(btn => {
             btn.addEventListener('click', () => goToSection(parseInt(btn.dataset.section)));
         });
 
