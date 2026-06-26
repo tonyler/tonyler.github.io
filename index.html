@@ -900,24 +900,53 @@
                 overflow-y: auto;
                 align-items: flex-start;
             }
+            /* Hero: 2-col, no scroll, cat always in frame */
+            .hero {
+                overflow: hidden;
+                align-items: stretch;
+            }
+            .hero-content {
+                grid-template-columns: 1fr 1fr;
+                gap: 0;
+                height: 100%;
+                align-items: end;
+            }
+            .hero-left {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                padding-bottom: 80px;
+            }
+            .hero-subtitle {
+                display: none;
+            }
             .hero-right {
                 display: flex;
                 position: relative;
                 right: auto;
                 bottom: auto;
-                height: 42vh;
+                height: 100%;
                 width: 100%;
                 justify-content: center;
                 align-items: flex-end;
-                margin-top: var(--space-sm);
+                overflow: visible;
+                margin-top: 0;
+            }
+            .hero-shape {
+                height: 100%;
+                width: 100%;
+                display: flex;
+                align-items: flex-end;
+                justify-content: center;
             }
             .hero-pfp {
                 position: relative;
                 bottom: auto;
                 left: auto;
                 transform: none;
-                height: 100%;
+                height: 85%;
                 width: auto;
+                max-width: none;
                 opacity: 0.9;
             }
             .section-content {
@@ -962,7 +991,7 @@
                 font-size: 0.75rem;
             }
             .hero-title {
-                font-size: clamp(2.5rem, 12vw, 4rem);
+                font-size: clamp(2rem, 10vw, 3rem);
             }
             .section-title {
                 font-size: clamp(1.6rem, 6vw, 2.5rem);
