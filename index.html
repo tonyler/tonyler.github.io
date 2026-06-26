@@ -900,37 +900,36 @@
                 overflow-y: auto;
                 align-items: flex-start;
             }
-            /* Hero: 2-col, no scroll, cat always in frame */
+            /* Hero: no scroll, cat pinned right like desktop */
             .hero {
                 overflow: hidden;
-                align-items: stretch;
             }
             .hero-content {
-                grid-template-columns: 1fr 1fr;
-                gap: 0;
-                height: 100%;
-                align-items: end;
+                grid-template-columns: 1fr;
+                position: static;
             }
             .hero-left {
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                padding-bottom: 80px;
+                width: 58%;
+                position: relative;
+                z-index: 2;
+                padding-bottom: 0;
             }
             .hero-subtitle {
-                display: none;
+                font-size: 0.85rem;
+                line-height: 1.5;
+                margin-bottom: var(--space-md);
             }
+            /* cat: absolutely positioned in the section, right side */
             .hero-right {
                 display: flex;
-                position: relative;
-                right: auto;
-                bottom: auto;
-                height: 100%;
-                width: 100%;
-                justify-content: center;
+                position: absolute;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                width: 52%;
                 align-items: flex-end;
-                overflow: visible;
-                margin-top: 0;
+                justify-content: flex-end;
+                overflow: hidden;
             }
             .hero-shape {
                 height: 100%;
@@ -941,13 +940,13 @@
             }
             .hero-pfp {
                 position: relative;
+                height: 88%;
+                width: auto;
+                max-width: none;
                 bottom: auto;
                 left: auto;
                 transform: none;
-                height: 85%;
-                width: auto;
-                max-width: none;
-                opacity: 0.9;
+                opacity: 0.85;
             }
             .section-content {
                 padding-bottom: var(--space-md);
