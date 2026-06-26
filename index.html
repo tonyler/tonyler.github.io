@@ -913,11 +913,11 @@
                 position: relative;
                 z-index: 2;
                 padding-bottom: 0;
+                justify-content: flex-end;
+                padding-bottom: var(--space-lg);
             }
             .hero-subtitle {
-                font-size: 0.85rem;
-                line-height: 1.5;
-                margin-bottom: var(--space-md);
+                display: none;
             }
             /* cat: absolutely positioned in the section, right side */
             .hero-right {
@@ -991,6 +991,13 @@
             }
             .hero-title {
                 font-size: clamp(2rem, 10vw, 3rem);
+                margin-bottom: var(--space-md);
+            }
+            .hero-cta {
+                padding: 14px 20px;
+                font-size: 0.8rem;
+                width: 100%;
+                justify-content: center;
             }
             .section-title {
                 font-size: clamp(1.6rem, 6vw, 2.5rem);
